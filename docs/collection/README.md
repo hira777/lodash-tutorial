@@ -171,3 +171,87 @@ _.flatMap([1, 2], duplicate);
 // => [1, 1, 2, 2]
 // 要は [[1, 1], [2, 2]] -> [1, 1, 2, 2]
 ```
+
+## \_.flatMapDeep
+
+```js
+_.flatMapDeep(collection, [(iteratee = _.identity)]);
+```
+
+繰り返し処理でマッピングされた結果を再帰的に平坦化した配列を返す。
+
+```js
+function duplicate(n) {
+  return [[[n, n]]];
+}
+
+_.flatMapDeep([1, 2], duplicate);
+// => [1, 1, 2, 2]
+// 要は [[[1, 1]], [[2, 2]]] -> [1, 1, 2, 2]
+```
+
+## \_.flatMapDepth
+
+```js
+_.flatMapDepth(collection, [(iteratee = _.identity)], [(depth = 1)]);
+```
+
+繰り返し処理でマッピングされた結果を、指定した深度（デフォルトは 1）で再帰的に平坦化した配列を返す。
+
+```js
+function duplicate(n) {
+  return [[[n, n]]];
+}
+
+_.flatMapDepth([1, 2], duplicate);
+// => [[[1, 1]], [[2, 2]]]
+_.flatMapDepth([1, 2], duplicate, 2);
+// => [[1, 1], [2, 2]]
+_.flatMapDepth([1, 2], duplicate, 3);
+// => [1, 1, 2, 2]
+```
+
+## \_.forEach
+
+<!-- 大体の人は理解していると思うので一旦飛ばす -->
+
+## \_.forEachRight
+
+```js
+_.forEachRight(collection, [(iteratee = _.identity)]);
+```
+
+コレクションの要素を右から左に繰り返し処理をする（`_.forEach`は左から右）。
+
+```js
+_.forEachRight([1, 2, 3], value => {
+  console.log(value);
+});
+// => `3`
+// => `2`
+// => `1`
+```
+
+## \_.groupBy
+
+```js
+_.groupBy(collection, [(iteratee = _.identity)]);
+```
+
+繰り返し処理で返される値をキーにしたオブジェクトを生成する。
+
+各キーに対応する値は、そのキーになる値を生成する要素をまとめた配列。
+
+```js
+_.groupBy([6.1, 4.2, 6.3], Math.floor);
+// => { 4: [4.2], 6: [6.1, 6.3] }
+// [6.1, 4.2, 6.3] に対して Math.floor を実行すると
+// [6, 4, 6] になる。`6`を返す要素が`6.1`と`6.3`で
+// `4`を返す要素は`4.2`のため、最終的な出力は
+// { 4: [4.2], 6: [6.1, 6.3] } になる
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.groupBy(['one', 'two', 'three'], _.property('length'));
+_.groupBy(['one', 'two', 'three'], 'length');
+// => { '3': ['one', 'two'], '5': ['three'] }
+```
