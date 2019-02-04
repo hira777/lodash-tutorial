@@ -94,10 +94,13 @@ _.every(users, 'active');
 _.find(collection, [(predicate = _.identity)], [(fromIndex = 0)]);
 ```
 
-反復処理で最初に`true`を返す要素を返す。
+反復処理で最初に`true`を返す要素を返す。第３引数で数値を渡すと、渡した数値のインデックスから検索を開始する。
 
 ```js
 _.find([1, 2, 3, 4], n => n % 2 == 1); // => 1
+
+// 第３引数で1を渡しているため、インデックスの1から検索を開始する
+_.find([1, 2, 3, 4], n => n % 2 == 1, 1); // => 3
 
 const users = [
   { user: 'barney', age: 36, active: true },
