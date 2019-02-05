@@ -259,3 +259,96 @@ _.groupBy(['one', 'two', 'three'], _.property('length'));
 _.groupBy(['one', 'two', 'three'], 'length');
 // => { '3': ['one', 'two'], '5': ['three'] }
 ```
+
+## \_.includes
+
+```js
+_.includes(collection, value, [(fromIndex = 0)]);
+```
+
+値がコレクション内にあるかチェックする。第３引数で数値を渡すと、渡した数値のインデックスからチェックをする。
+
+```js
+_.includes([1, 2, 3], 1);
+
+// 第３引数で1を渡しているため、インデックスの1から検索を開始する
+_.includes([1, 2, 3], 1, 1); // => false
+
+_.includes({ a: 1, b: '2' }, '2'); // => true
+
+_.includes('abcd', 'bc'); // => true
+```
+
+## \_.invokeMap
+
+```js
+_.invokeMap(collection, path, [args]);
+```
+
+コレクション内の各要素のメソッドを呼び出し、呼び出されたメソッドの結果を配列で返す。
+
+追加の引数は、呼び出された各メソッドに提供されます。 path が関数の場合、コレクション内の各要素に対して呼び出され、それにバインドされます。
+
+```js
+// `toUpperCase`を渡しているため、`'a'.toUpperCase()`のようにそれぞれの
+// 要素（`'a', 'b', 'c'`）で`toUpperCase`が実行されている
+_.invokeMap(['a', 'b', 'c'], 'toUpperCase'); // => ["A", "B", "C"]
+// つまり、処理結果は以下と同じ
+_.map(['a', 'b', 'c'], v => v.toUpperCase()); // => ["A", "B", "C"]
+
+_.invokeMap([['a', 'b'], ['c', 'd']], 'join', ''); // => ['ab', 'cd']
+// 処理結果は以下と同じ
+_.map([['a', 'b'], ['c', 'd']], v => v.join('')); // => ["A", "B", "C"]
+```
+
+## \_.keyBy
+
+```js
+_.keyBy(collection, [(iteratee = _.identity)]);
+```
+
+繰り返し処理で返される値をキーにして、処理される要素を値にしたオブジェクトを生成する。
+
+各キーに対応する値は、そのキーになる値を生成する際に処理される要素。
+
+```js
+const array = [{ dir: 'left', code: 97 }, { dir: 'right', code: 100 }];
+
+_.keyBy(array, o => String.fromCharCode(o.code);
+// => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
+// `97`と`100` に対して String.fromCharCode を実行すると
+// `'a'`と`'d'`になる。それがキーになり、処理される要素が値になるため、最終的な出力は
+// { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } } になる
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.keyBy(array, _.property('dir'));
+_.keyBy(array, 'dir');
+// => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
+```
+
+## \_.map
+
+<!-- 大体の人は理解していると思うので一旦飛ばす -->
+
+## \_.orderBy
+
+```js
+_.orderBy(collection, [(iteratees = [_.identity])], [orders]);
+```
+
+コレクションの要素を指定したソート順でソートする。
+
+降順の場合は`'desc'`、昇順の場合は`'asc'`を指定する。指定がない場合は全て昇順でソートされる。
+
+```js
+const users = [
+  { user: 'fred', age: 48 },
+  { user: 'barney', age: 34 },
+  { user: 'fred', age: 40 },
+  { user: 'barney', age: 36 }
+];
+
+// `user`を昇順、`age`を降順でソートする
+_.orderBy(users, ['user', 'age'], ['asc', 'desc']);
+// => [{ user: "fred", age: 48 }, { user: "fred", age: 40 }, { user: "barney", age: 36 }, { user: "barney", age: 34 }]
+```
