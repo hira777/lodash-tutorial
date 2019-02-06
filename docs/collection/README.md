@@ -352,3 +352,103 @@ const users = [
 _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
 // => [{ user: "fred", age: 48 }, { user: "fred", age: 40 }, { user: "barney", age: 36 }, { user: "barney", age: 34 }]
 ```
+
+## \_.partition
+
+```js
+_.partition(collection, [(predicate = _.identity)]);
+```
+
+繰り返し処理で`true`を返す要素をまとめた配列と、`false`を返す要素でまとめた配列を返す。
+
+```js
+var users = [
+  { user: 'barney', age: 36, active: false },
+  { user: 'fred', age: 40, active: true },
+  { user: 'pebbles', age: 1, active: false }
+];
+
+_.partition(users, o => o.active);
+// =>
+// [
+//   [{ user: 'fred', age: 40, active: true }],
+//   [{ user: 'barney', age: 36, active: false }, { user: 'pebbles', age: 1, active: false }]
+// ];
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.partition(users, _.matches({ age: 1, active: false }));
+_.partition(users, { age: 1, active: false });
+// =>
+// [
+//   [{ user: 'pebbles', age: 1, active: false }],
+//   [{ user: 'barney', age: 36, active: false }, { user: 'fred', age: 40, active: true }]
+// ];
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.partition(users, _.matchesProperty('active', false));
+_.partition(users, ['active', false]);
+// =>
+// [
+//   [{ user: 'barney', age: 36, active: false }, { user: 'pebbles', age: 1, active: false }],
+//   [{ user: 'fred', age: 40, active: true }]
+// ];
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.partition(users, _.property('active'));
+_.partition(users, 'active');
+// =>
+// [
+//   [{ user: 'fred', age: 40, active: true }],
+//   [{ user: 'barney', age: 36, active: false }, { user: 'pebbles', age: 1, active: false }]
+// ];
+```
+
+## \_.reduce
+
+<!-- 大体の人は理解していると思うので一旦飛ばす -->
+
+## \_.reduceRight
+
+```js
+_.reduceRight(collection, [(iteratee = _.identity)], [accumulator]);
+```
+
+機能は`_.reduce`と同じだが、要素を右から反復処理をする。
+
+```js
+const array = [[0, 1], [2, 3], [4, 5]];
+
+_.reduceRight(array, (acc, v) => acc.concat(v), []);
+// => [4, 5, 2, 3, 0, 1]
+```
+
+## \_.reject
+
+```js
+_.reject(collection, [(predicate = _.identity)]);
+```
+
+`false`を返す要素をまとめた配列を返す。`_.filter`の逆。
+
+```js
+const users = [
+  { user: 'barney', age: 36, active: false },
+  { user: 'fred', age: 40, active: true }
+];
+
+_.reject(users, user => user.active);
+// => [{ user: 'barney', age: 36, active: false }]
+```
+
+## \_.sample
+
+```js
+_.sample(collection);
+```
+
+コレクションからランダムな要素を取得する。
+
+```js
+_.sample([1, 2, 3, 4]);
+// => 1、2、3、4のいずれかを返す
+```
