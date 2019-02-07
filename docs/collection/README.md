@@ -1,31 +1,32 @@
 # Collection
 
-- \_.countBy
-- \_.every
-- \_.filter
-- \_.find
-- \_.findLast
-- \_.flatMap
-- \_.flatMapDeep
-- \_.flatMapDepth
-- \_.forEach
-- \_.forEachRight
-- \_.groupBy
-- \_.includes
-- \_.invokeMap
-- \_.keyBy
-- \_.map
-- \_.orderBy
-- \_.partition
-- \_.reduce
-- \_.reduceRight
-- \_.reject
-- \_.sample
-- \_.sampleSize
-- \_.shuffle
-- \_.size
-- \_.some
-- \_.sortBy
+- [Collection](#collection)
+  - [\_.countBy](#countby)
+  - [\_.every](#every)
+  - [\_.filter](#filter)
+  - [\_.find](#find)
+  - [\_.findLast](#findlast)
+  - [\_.flatMap](#flatmap)
+  - [\_.flatMapDeep](#flatmapdeep)
+  - [\_.flatMapDepth](#flatmapdepth)
+  - [\_.forEach](#foreach)
+  - [\_.forEachRight](#foreachright)
+  - [\_.groupBy](#groupby)
+  - [\_.includes](#includes)
+  - [\_.invokeMap](#invokemap)
+  - [\_.keyBy](#keyby)
+  - [\_.map](#map)
+  - [\_.orderBy](#orderby)
+  - [\_.partition](#partition)
+  - [\_.reduce](#reduce)
+  - [\_.reduceRight](#reduceright)
+  - [\_.reject](#reject)
+  - [\_.sample](#sample)
+  - [\_.sampleSize](#samplesize)
+  - [\_.shuffle](#shuffle)
+  - [\_.size](#size)
+  - [\_.some](#some)
+  - [\_.sortBy](#sortby)
 
 ## \_.countBy
 
@@ -33,19 +34,16 @@
 _.countBy(collection, [(iteratee = _.identity)]);
 ```
 
-反復処理で返される値をキーにしたオブジェクトを生成する。
+反復処理で返される値をキーにしたオブジェクトを返す。
 
 各キーに対応する値は、そのキーになる値を生成した回数。
 
 ```js
 _.countBy([6.1, 4.2, 6.3], Math.floor);
-// => { '4': 1, '6': 2 }
 // [6.1, 4.2, 6.3] に対して Math.floor を実行すると
-// [6, 4, 6] になる。 6 が２つで 4が１つなので、最終的な出力は
-// { '4': 1, '6': 2 } になる
-```
+// [6, 4, 6] になる。`6`が２つで `4`が１つなので、最終的な出力は
+// => { '4': 1, '6': 2 }
 
-```js
 _.countBy([1, 2, 5, 8, 42, 12], num => (num % 2 == 0 ? 'even' : 'odd'));
 // => Object {odd: 2, even: 4}
 ```
@@ -88,7 +86,38 @@ _.every(users, 'active');
 
 ## \_.filter
 
-<!-- 大体の人は理解していると思うので一旦飛ばす -->
+```js
+_.filter(collection, [(predicate = _.identity)]);
+```
+
+反復処理で`true`を返す要素をまとめた配列を返す。
+
+```js
+_.filter([1, 2, 3, 4, 5], num => num % 2 === 0);
+// => [2, 4]
+
+var users = [
+  { user: 'barney', age: 36, active: true },
+  { user: 'fred', age: 40, active: false }
+];
+
+_.filter(users, user => user.active);
+// => [{user: "barney", age: 36, active: true}]
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.filter(users, _.matches({ age: 36, active: true }));
+_.filter(users, { age: 36, active: true });
+// => [{user: "barney", age: 36, active: true}]
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.filter(users, _.matchesProperty('active', false));
+_.filter(users, ['active', false]);
+// => objects for ['fred']
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.filter(users, 'active');
+// => objects for ['barney']
+```
 
 ## \_.find
 
@@ -96,7 +125,9 @@ _.every(users, 'active');
 _.find(collection, [(predicate = _.identity)], [(fromIndex = 0)]);
 ```
 
-反復処理で最初に`true`を返す要素を返す。第３引数で数値を渡すと、渡した数値のインデックスから検索を開始する。
+反復処理で最初に`true`を返す要素を返す。
+
+第３引数で数値を渡すと、渡した数値のインデックスから検索を開始する。
 
 ```js
 _.find([1, 2, 3, 4], n => n % 2 == 1); // => 1
@@ -139,10 +170,16 @@ _.findLast(
 );
 ```
 
-反復処理で最後に`true`を返す要素を返す。
+右から左の反復処理で最初に`true`を返す要素を返す。
+
+第３引数で数値を渡すと、渡した数値のインデックスから検索を開始する。
 
 ```js
 _.findLast([1, 2, 3, 4], n => n % 2 == 1); // => 3
+
+// 第３引数で1を渡しているため、インデックスの1から検索を開始する。
+// 右から左に反復処理されるため、[2, 1]の順番でチェックされる。
+_.findLast([1, 2, 3, 4], n => n % 2 == 1, 1); // => 1
 
 const users = [
   { user: 'barney', age: 36, active: true },
@@ -152,9 +189,22 @@ const users = [
 
 _.findLast(users, user => user.age < 40);
 // => {user: "pebbles", age: 1, active: true}
-```
 
-`_.find`と同様で`_.matches`、`_.matchesProperty`、`_.property`をショートハンドでも書ける。
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findLast(users, _.matches({ age: 1, active: true }));
+_.findLast(users, { age: 1, active: true });
+// => {user: "pebbles", age: 1, active: true}
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findLast(users, _.matchesProperty('active', false));
+_.findLast(users, ['active', false]);
+// => {user: "fred", age: 40, active: false}
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findLast(users, _.property('active'));
+_.findLast(users, 'active');
+// => {user: "pebbles", age: 1, active: true}
+```
 
 ## \_.flatMap
 
@@ -162,7 +212,7 @@ _.findLast(users, user => user.age < 40);
 _.flatMap(collection, [(iteratee = _.identity)]);
 ```
 
-反復処理でマッピングされた結果を平坦化した配列を返す。
+反復処理でマッピングされた結果（配列）を平坦化した配列を返す。
 
 ```js
 function duplicate(n) {
@@ -180,7 +230,7 @@ _.flatMap([1, 2], duplicate);
 _.flatMapDeep(collection, [(iteratee = _.identity)]);
 ```
 
-反復処理でマッピングされた結果を再帰的に平坦化した配列を返す。
+反復処理でマッピングされた結果（配列）を再帰的に平坦化した配列を返す。
 
 ```js
 function duplicate(n) {
@@ -198,7 +248,7 @@ _.flatMapDeep([1, 2], duplicate);
 _.flatMapDepth(collection, [(iteratee = _.identity)], [(depth = 1)]);
 ```
 
-反復処理でマッピングされた結果を、指定した深度（デフォルトは 1）で再帰的に平坦化した配列を返す。
+反復処理でマッピングされた結果（配列）を、指定した深度（デフォルトは 1）で再帰的に平坦化した配列を返す。
 
 ```js
 function duplicate(n) {
@@ -215,7 +265,28 @@ _.flatMapDepth([1, 2], duplicate, 3);
 
 ## \_.forEach
 
-<!-- 大体の人は理解していると思うので一旦飛ばす -->
+```js
+_.forEach(collection, [(iteratee = _.identity)]);
+```
+
+コレクションの要素を反復処理する。
+
+```js
+_.forEach([1, 2], value => {
+  console.log(value);
+});
+// => `1`
+// => `2`
+
+_.forEach({ a: 1, b: 2 }, (value, key) => {
+  console.log(value);
+  console.log(key);
+});
+// => 1
+// => a
+// => 2
+// => b
+```
 
 ## \_.forEachRight
 
@@ -223,7 +294,7 @@ _.flatMapDepth([1, 2], duplicate, 3);
 _.forEachRight(collection, [(iteratee = _.identity)]);
 ```
 
-コレクションの要素を右から左に反復処理をする（`_.forEach`は左から右）。
+コレクションの要素を右から左に反復処理する。
 
 ```js
 _.forEachRight([1, 2, 3], value => {
@@ -240,19 +311,16 @@ _.forEachRight([1, 2, 3], value => {
 _.groupBy(collection, [(iteratee = _.identity)]);
 ```
 
-反復処理で返される値をキーにしたオブジェクトを生成する。
+反復処理で返される値をキーにしたオブジェクトを返す。
 
 各キーに対応する値は、そのキーになる値を生成する要素をまとめた配列。
 
----
-
 ```js
 _.groupBy([6.1, 4.2, 6.3], Math.floor);
-// => { 4: [4.2], 6: [6.1, 6.3] }
 // [6.1, 4.2, 6.3] に対して Math.floor を実行すると
 // [6, 4, 6] になる。`6`を返す要素が`6.1`と`6.3`で
 // `4`を返す要素は`4.2`のため、最終的な出力は
-// { 4: [4.2], 6: [6.1, 6.3] } になる
+// => { 4: [4.2], 6: [6.1, 6.3] }
 
 // `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.groupBy(['one', 'two', 'three'], _.property('length'));
@@ -266,7 +334,9 @@ _.groupBy(['one', 'two', 'three'], 'length');
 _.includes(collection, value, [(fromIndex = 0)]);
 ```
 
-値がコレクション内にあるかチェックする。第３引数で数値を渡すと、渡した数値のインデックスからチェックをする。
+値がコレクション内に存在すれば`true`を返す。
+
+第３引数で数値を渡すと、渡した数値のインデックスからチェックを開始する。
 
 ```js
 _.includes([1, 2, 3], 1);
@@ -287,13 +357,13 @@ _.invokeMap(collection, path, [args]);
 
 コレクション内の各要素のメソッドを呼び出し、呼び出されたメソッドの結果を配列で返す。
 
-追加の引数は、呼び出された各メソッドに提供されます。 path が関数の場合、コレクション内の各要素に対して呼び出され、それにバインドされます。
+追加の引数は、呼び出された各メソッド渡される。
 
 ```js
 // `toUpperCase`を渡しているため、`'a'.toUpperCase()`のようにそれぞれの
 // 要素（`'a', 'b', 'c'`）で`toUpperCase`が実行されている
 _.invokeMap(['a', 'b', 'c'], 'toUpperCase'); // => ["A", "B", "C"]
-// つまり、処理結果は以下と同じ
+// 処理結果は以下と同じ
 _.map(['a', 'b', 'c'], v => v.toUpperCase()); // => ["A", "B", "C"]
 
 _.invokeMap([['a', 'b'], ['c', 'd']], 'join', ''); // => ['ab', 'cd']
@@ -307,7 +377,7 @@ _.map([['a', 'b'], ['c', 'd']], v => v.join('')); // => ["A", "B", "C"]
 _.keyBy(collection, [(iteratee = _.identity)]);
 ```
 
-反復処理で返される値をキーにして、処理される要素を値にしたオブジェクトを生成する。
+反復処理で返される値をキーにして、処理される要素を値にしたオブジェクトを返す。
 
 各キーに対応する値は、そのキーになる値を生成する際に処理される要素。
 
@@ -315,10 +385,9 @@ _.keyBy(collection, [(iteratee = _.identity)]);
 const array = [{ dir: 'left', code: 97 }, { dir: 'right', code: 100 }];
 
 _.keyBy(array, o => String.fromCharCode(o.code);
-// => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
 // `97`と`100` に対して String.fromCharCode を実行すると
 // `'a'`と`'d'`になる。それがキーになり、処理される要素が値になるため、最終的な出力は
-// { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } } になる
+// => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
 
 // `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.keyBy(array, _.property('dir'));
@@ -328,7 +397,30 @@ _.keyBy(array, 'dir');
 
 ## \_.map
 
-<!-- 大体の人は理解していると思うので一旦飛ばす -->
+```js
+_.map(collection, [(iteratee = _.identity)]);
+```
+
+反復処理の実行結果をまとめた配列を返す。
+
+```js
+function square(n) {
+  return n * n;
+}
+
+_.map([4, 8], square);
+// => [16, 64]
+
+_.map({ a: 4, b: 8 }, square);
+// => [16, 64]
+
+const users = [{ user: 'barney' }, { user: 'fred' }];
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.map(users, _.property('user'));
+_.map(users, 'user');
+// => ['barney', 'fred']
+```
 
 ## \_.orderBy
 
@@ -405,7 +497,38 @@ _.partition(users, 'active');
 
 ## \_.reduce
 
-<!-- 大体の人は理解していると思うので一旦飛ばす -->
+```js
+_.reduce(collection, [(iteratee = _.identity)], [accumulator]);
+```
+
+反復処理の結果を累積した値を返す。
+
+反復処理が呼び出されるごとに、前の呼び出しの戻り値が渡される。
+
+```js
+_.reduce([1, 2, 3], (sum, num) => sum + num, 0);
+// `sum + num`の戻り値が累積される。
+// `sum`に累積された値が渡される。第3引数で初期値を指定するので、`sum`の初期値は`0`になる。
+// 今回の処理の場合、以下のように値を加算して累積する。
+// 1回目の反復処理では`sum`が`0`で`num`が`1`なので、`0 + 1`の戻り値である`1`を累積して次の反復処理へ
+// 2回目の反復処理では`sum`が`1`で`num`が`2`なので、`1 + 2`の戻り値である`3`を累積して次の反復処理へ
+// 3回目の反復処理では`sum`が`3`で`num`が`3`なので、`3 + 3`の戻り値である`6`を累積して値を返す。そのため、最終的な出力は
+// =>  6
+
+_.reduce(
+  { a: 1, b: 2, c: 1 },
+  (result, value, key) => {
+    const obj = {};
+    obj[key] = value * 2;
+    return { ...result, ...obj };
+  },
+  {}
+);
+// => {a: 2, b: 4, c: 2}
+
+_.reduce(['a', 'b', 'c'], (result, str) => result + str, '');
+// => 'abc'
+```
 
 ## \_.reduceRight
 
@@ -431,12 +554,29 @@ _.reject(collection, [(predicate = _.identity)]);
 `false`を返す要素をまとめた配列を返す。`_.filter`の逆。
 
 ```js
+_.reject([1, 2, 3, 4, 5], num => num % 2 === 0);
+// => [1, 3, 5]
+
 const users = [
   { user: 'barney', age: 36, active: false },
   { user: 'fred', age: 40, active: true }
 ];
 
 _.reject(users, user => user.active);
+// => [{ user: 'barney', age: 36, active: false }]
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.reject(users, _.matches({ age: 40, active: true }));
+_.reject(users, { age: 40, active: true });
+// => [{user: "barney", age: 36, active: false}]
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.reject(users, _.matchesProperty('active', false));
+_.reject(users, ['active', false]);
+// => [{ user: 'fred', age: 40, active: true }]
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.reject(users, 'active');
 // => [{ user: 'barney', age: 36, active: false }]
 ```
 
@@ -548,7 +688,7 @@ _.sortBy(collection, [(iteratees = [_.identity])]);
 _.sortBy([2, 9, 5], num => 10 - num);
 // それぞれの処理の結果は[8, 1, 5]になる。
 // この結果を昇順にソートすると[1, 5, 8]
-// そして、この結果を返す要素を返すので[9, 5, 2]が返される
+// そして、この結果を返す要素を返すため、最終的な出力は
 // => [9, 5, 2]
 
 const users = [
