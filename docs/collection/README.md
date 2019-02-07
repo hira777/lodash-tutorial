@@ -33,7 +33,7 @@
 _.countBy(collection, [(iteratee = _.identity)]);
 ```
 
-繰り返し処理で返される値をキーにしたオブジェクトを生成する。
+反復処理で返される値をキーにしたオブジェクトを生成する。
 
 各キーに対応する値は、そのキーになる値を生成した回数。
 
@@ -56,7 +56,7 @@ _.countBy([1, 2, 5, 8, 42, 12], num => (num % 2 == 0 ? 'even' : 'odd'));
 _.every(collection, [(predicate = _.identity)]);
 ```
 
-繰り返し処理が全て`true`を返す場合、`true`を返す。
+反復処理が全て`true`を返す場合、`true`を返す。
 
 ```js
 _.every([1, 2, 3, 4], n => n % 2 == 0); // => false
@@ -96,7 +96,7 @@ _.every(users, 'active');
 _.find(collection, [(predicate = _.identity)], [(fromIndex = 0)]);
 ```
 
-繰り返し処理で最初に`true`を返す要素を返す。第３引数で数値を渡すと、渡した数値のインデックスから検索を開始する。
+反復処理で最初に`true`を返す要素を返す。第３引数で数値を渡すと、渡した数値のインデックスから検索を開始する。
 
 ```js
 _.find([1, 2, 3, 4], n => n % 2 == 1); // => 1
@@ -139,7 +139,7 @@ _.findLast(
 );
 ```
 
-繰り返し処理で最後に`true`を返す要素を返す。
+反復処理で最後に`true`を返す要素を返す。
 
 ```js
 _.findLast([1, 2, 3, 4], n => n % 2 == 1); // => 3
@@ -162,7 +162,7 @@ _.findLast(users, user => user.age < 40);
 _.flatMap(collection, [(iteratee = _.identity)]);
 ```
 
-繰り返し処理でマッピングされた結果を平坦化した配列を返す。
+反復処理でマッピングされた結果を平坦化した配列を返す。
 
 ```js
 function duplicate(n) {
@@ -180,7 +180,7 @@ _.flatMap([1, 2], duplicate);
 _.flatMapDeep(collection, [(iteratee = _.identity)]);
 ```
 
-繰り返し処理でマッピングされた結果を再帰的に平坦化した配列を返す。
+反復処理でマッピングされた結果を再帰的に平坦化した配列を返す。
 
 ```js
 function duplicate(n) {
@@ -198,7 +198,7 @@ _.flatMapDeep([1, 2], duplicate);
 _.flatMapDepth(collection, [(iteratee = _.identity)], [(depth = 1)]);
 ```
 
-繰り返し処理でマッピングされた結果を、指定した深度（デフォルトは 1）で再帰的に平坦化した配列を返す。
+反復処理でマッピングされた結果を、指定した深度（デフォルトは 1）で再帰的に平坦化した配列を返す。
 
 ```js
 function duplicate(n) {
@@ -223,7 +223,7 @@ _.flatMapDepth([1, 2], duplicate, 3);
 _.forEachRight(collection, [(iteratee = _.identity)]);
 ```
 
-コレクションの要素を右から左に繰り返し処理をする（`_.forEach`は左から右）。
+コレクションの要素を右から左に反復処理をする（`_.forEach`は左から右）。
 
 ```js
 _.forEachRight([1, 2, 3], value => {
@@ -240,7 +240,7 @@ _.forEachRight([1, 2, 3], value => {
 _.groupBy(collection, [(iteratee = _.identity)]);
 ```
 
-繰り返し処理で返される値をキーにしたオブジェクトを生成する。
+反復処理で返される値をキーにしたオブジェクトを生成する。
 
 各キーに対応する値は、そのキーになる値を生成する要素をまとめた配列。
 
@@ -307,7 +307,7 @@ _.map([['a', 'b'], ['c', 'd']], v => v.join('')); // => ["A", "B", "C"]
 _.keyBy(collection, [(iteratee = _.identity)]);
 ```
 
-繰り返し処理で返される値をキーにして、処理される要素を値にしたオブジェクトを生成する。
+反復処理で返される値をキーにして、処理される要素を値にしたオブジェクトを生成する。
 
 各キーに対応する値は、そのキーになる値を生成する際に処理される要素。
 
@@ -359,7 +359,7 @@ _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
 _.partition(collection, [(predicate = _.identity)]);
 ```
 
-繰り返し処理で`true`を返す要素をまとめた配列と、`false`を返す要素でまとめた配列を返す。
+反復処理で`true`を返す要素をまとめた配列と、`false`を返す要素でまとめた配列を返す。
 
 ```js
 var users = [
@@ -512,7 +512,7 @@ _.size('pebbles');
 _.some(collection, [(predicate = _.identity)]);
 ```
 
-繰り返し処理のいずれかが`true`を返す場合、`true`を返す。
+反復処理のいずれかが`true`を返す場合、`true`を返す。
 
 ```js
 const users = [
@@ -542,7 +542,7 @@ _.some(users, 'active');
 _.sortBy(collection, [(iteratees = [_.identity])]);
 ```
 
-要素を繰り返し処理の結果で昇順にソートした配列を返す。
+要素を反復処理の結果で昇順にソートした配列を返す。
 
 ```js
 _.sortBy([2, 9, 5], num => 10 - num);
