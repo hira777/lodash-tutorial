@@ -452,3 +452,136 @@ _.sample(collection);
 _.sample([1, 2, 3, 4]);
 // => 1、2、3、4のいずれかを返す
 ```
+
+## \_.sampleSize
+
+```js
+_.sampleSize(collection, [(n = 1)]);
+```
+
+コレクションからランダムな要素を指定した個数取得する。
+
+```js
+_.sampleSize([1, 2, 3], 2);
+// => [3, 1]
+
+// 要素数より大きな数を指定すると、全部の要素を取得する
+_.sampleSize([1, 2, 3], 4);
+// => [2, 3, 1]
+```
+
+## \_.shuffle
+
+```js
+_.sampleSize(collection, [(n = 1)]);
+```
+
+要素をシャッフルした配列を返す。
+
+```js
+_.shuffle([1, 2, 3, 4]);
+// => [4, 1, 3, 2] などの要素がシャッフルされた配列
+```
+
+## \_.size
+
+```js
+_.size(collection);
+```
+
+コレクションの長さを返す。
+
+- 配列: 配列の長さ
+- オブジェクト: 文字列型のキープロパティの数
+- 文字列: 文字列の長さ
+
+```js
+_.size([1, 2, 3]);
+// => 3
+
+_.size({ a: 1, b: 2 });
+// => 2
+
+_.size('pebbles');
+// => 7
+```
+
+## \_.some
+
+```js
+_.some(collection, [(predicate = _.identity)]);
+```
+
+繰り返し処理のいずれかが`true`を返す場合、`true`を返す。
+
+```js
+const users = [
+  { user: 'barney', active: true },
+  { user: 'fred', active: false }
+];
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.some(users, _.matches({ user: 'barney', active: false }));
+_.some(users, { user: 'barney', active: false });
+// => false
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.some(users, _.matchesProperty('active', false));
+_.some(users, ['active', false]);
+// => true
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.some(users, _.property('active'));
+_.some(users, 'active');
+// => true
+```
+
+## \_.sortBy
+
+```js
+_.sortBy(collection, [(iteratees = [_.identity])]);
+```
+
+要素を繰り返し処理の結果で昇順にソートした配列を返す。
+
+```js
+_.sortBy([2, 9, 5], num => 10 - num);
+// それぞれの処理の結果は[8, 1, 5]になる。
+// この結果を昇順にソートすると[1, 5, 8]
+// そして、この結果を返す要素を返すので[9, 5, 2]が返される
+// => [9, 5, 2]
+
+const users = [
+  { name: 'fred', age: 48 },
+  { name: 'barney', age: 50 },
+  { name: 'fred', age: 40 },
+  { name: 'barney', age: 34 }
+];
+
+_.sortBy(users, user => user.name);
+// =>
+// [
+//   { name: 'barney', age: 50 },
+//   { name: 'barney', age: 34 },
+//   { name: 'fred', age: 48 },
+//   { name: 'fred', age: 40 }
+// ];
+
+_.sortBy(users, user => user.age);
+// =>
+// [
+//   { name: 'barney', age: 34 },
+//   { name: 'fred', age: 40 },
+//   { name: 'fred', age: 48 },
+//   { name: 'barney', age: 50 }
+// ];
+
+_.sortBy(users, ['name', 'age']);
+// =>
+// [
+//   { name: 'barney', age: 34 },
+//   { name: 'barney', age: 50 },
+//   { name: 'fred', age: 40 },
+//   { name: 'fred', age: 48 }
+// ];
+```
