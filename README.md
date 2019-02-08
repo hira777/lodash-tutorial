@@ -24,10 +24,10 @@ Lodash と似たような機能を提供する[Ramda](https://ramdajs.com/) と�
 
 そのため、「関数型プログラミングでコードを書きたい」などの理由がなければ Lodash を使っておけばいいと思う。
 
-## ドキュメント
+## リファレンス
 
 - Array
-- Collection
+- [Collection](./docs/collection/)
 - Data
 - Function
 - Lang
