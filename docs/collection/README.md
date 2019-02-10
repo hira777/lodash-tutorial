@@ -1,34 +1,34 @@
 # Collection
 
 - [Collection](#collection)
-  - [\_.countBy](#countby)
-  - [\_.every](#every)
-  - [\_.filter](#filter)
-  - [\_.find](#find)
-  - [\_.findLast](#findlast)
-  - [\_.flatMap](#flatmap)
-  - [\_.flatMapDeep](#flatmapdeep)
-  - [\_.flatMapDepth](#flatmapdepth)
-  - [\_.forEach](#foreach)
-  - [\_.forEachRight](#foreachright)
-  - [\_.groupBy](#groupby)
-  - [\_.includes](#includes)
-  - [\_.invokeMap](#invokemap)
-  - [\_.keyBy](#keyby)
-  - [\_.map](#map)
-  - [\_.orderBy](#orderby)
-  - [\_.partition](#partition)
-  - [\_.reduce](#reduce)
-  - [\_.reduceRight](#reduceright)
-  - [\_.reject](#reject)
-  - [\_.sample](#sample)
-  - [\_.sampleSize](#samplesize)
-  - [\_.shuffle](#shuffle)
-  - [\_.size](#size)
-  - [\_.some](#some)
-  - [\_.sortBy](#sortby)
+  - [countBy](#countby)
+  - [every](#every)
+  - [filter](#filter)
+  - [find](#find)
+  - [findLast](#findlast)
+  - [flatMap](#flatmap)
+  - [flatMapDeep](#flatmapdeep)
+  - [flatMapDepth](#flatmapdepth)
+  - [forEach](#foreach)
+  - [forEachRight](#foreachright)
+  - [groupBy](#groupby)
+  - [includes](#includes)
+  - [invokeMap](#invokemap)
+  - [keyBy](#keyby)
+  - [map](#map)
+  - [orderBy](#orderby)
+  - [partition](#partition)
+  - [reduce](#reduce)
+  - [reduceRight](#reduceright)
+  - [reject](#reject)
+  - [sample](#sample)
+  - [sampleSize](#samplesize)
+  - [shuffle](#shuffle)
+  - [size](#size)
+  - [some](#some)
+  - [sortBy](#sortby)
 
-## \_.countBy
+## countBy
 
 ```js
 _.countBy(collection, [(iteratee = _.identity)]);
@@ -48,7 +48,7 @@ _.countBy([1, 2, 5, 8, 42, 12], num => (num % 2 == 0 ? 'even' : 'odd'));
 // => Object {odd: 2, even: 4}
 ```
 
-## \_.every
+## every
 
 ```js
 _.every(collection, [(predicate = _.identity)]);
@@ -84,7 +84,7 @@ _.every(users, 'active');
 // => false
 ```
 
-## \_.filter
+## filter
 
 ```js
 _.filter(collection, [(predicate = _.identity)]);
@@ -119,7 +119,7 @@ _.filter(users, 'active');
 // => objects for ['barney']
 ```
 
-## \_.find
+## find
 
 ```js
 _.find(collection, [(predicate = _.identity)], [(fromIndex = 0)]);
@@ -160,7 +160,7 @@ _.find(users, 'active');
 // => {user: "barney", age: 36, active: true}
 ```
 
-## \_.findLast
+## findLast
 
 ```js
 _.findLast(
@@ -206,7 +206,7 @@ _.findLast(users, 'active');
 // => {user: "pebbles", age: 1, active: true}
 ```
 
-## \_.flatMap
+## flatMap
 
 ```js
 _.flatMap(collection, [(iteratee = _.identity)]);
@@ -224,7 +224,7 @@ _.flatMap([1, 2], duplicate);
 // 要は [[1, 1], [2, 2]] -> [1, 1, 2, 2]
 ```
 
-## \_.flatMapDeep
+## flatMapDeep
 
 ```js
 _.flatMapDeep(collection, [(iteratee = _.identity)]);
@@ -242,7 +242,7 @@ _.flatMapDeep([1, 2], duplicate);
 // 要は [[[1, 1]], [[2, 2]]] -> [1, 1, 2, 2]
 ```
 
-## \_.flatMapDepth
+## flatMapDepth
 
 ```js
 _.flatMapDepth(collection, [(iteratee = _.identity)], [(depth = 1)]);
@@ -263,7 +263,7 @@ _.flatMapDepth([1, 2], duplicate, 3);
 // => [1, 1, 2, 2]
 ```
 
-## \_.forEach
+## forEach
 
 ```js
 _.forEach(collection, [(iteratee = _.identity)]);
@@ -288,7 +288,7 @@ _.forEach({ a: 1, b: 2 }, (value, key) => {
 // => b
 ```
 
-## \_.forEachRight
+## forEachRight
 
 ```js
 _.forEachRight(collection, [(iteratee = _.identity)]);
@@ -305,7 +305,7 @@ _.forEachRight([1, 2, 3], value => {
 // => `1`
 ```
 
-## \_.groupBy
+## groupBy
 
 ```js
 _.groupBy(collection, [(iteratee = _.identity)]);
@@ -328,7 +328,7 @@ _.groupBy(['one', 'two', 'three'], 'length');
 // => { '3': ['one', 'two'], '5': ['three'] }
 ```
 
-## \_.includes
+## includes
 
 ```js
 _.includes(collection, value, [(fromIndex = 0)]);
@@ -349,7 +349,7 @@ _.includes({ a: 1, b: '2' }, '2'); // => true
 _.includes('abcd', 'bc'); // => true
 ```
 
-## \_.invokeMap
+## invokeMap
 
 ```js
 _.invokeMap(collection, path, [args]);
@@ -371,7 +371,7 @@ _.invokeMap([['a', 'b'], ['c', 'd']], 'join', ''); // => ['ab', 'cd']
 _.map([['a', 'b'], ['c', 'd']], v => v.join('')); // => ["A", "B", "C"]
 ```
 
-## \_.keyBy
+## keyBy
 
 ```js
 _.keyBy(collection, [(iteratee = _.identity)]);
@@ -395,7 +395,7 @@ _.keyBy(array, 'dir');
 // => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
 ```
 
-## \_.map
+## map
 
 ```js
 _.map(collection, [(iteratee = _.identity)]);
@@ -422,7 +422,7 @@ _.map(users, 'user');
 // => ['barney', 'fred']
 ```
 
-## \_.orderBy
+## orderBy
 
 ```js
 _.orderBy(collection, [(iteratees = [_.identity])], [orders]);
@@ -445,7 +445,7 @@ _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
 // => [{ user: "fred", age: 48 }, { user: "fred", age: 40 }, { user: "barney", age: 36 }, { user: "barney", age: 34 }]
 ```
 
-## \_.partition
+## partition
 
 ```js
 _.partition(collection, [(predicate = _.identity)]);
@@ -495,7 +495,7 @@ _.partition(users, 'active');
 // ];
 ```
 
-## \_.reduce
+## reduce
 
 ```js
 _.reduce(collection, [(iteratee = _.identity)], [accumulator]);
@@ -530,7 +530,7 @@ _.reduce(['a', 'b', 'c'], (result, str) => result + str, '');
 // => 'abc'
 ```
 
-## \_.reduceRight
+## reduceRight
 
 ```js
 _.reduceRight(collection, [(iteratee = _.identity)], [accumulator]);
@@ -545,7 +545,7 @@ _.reduceRight(array, (acc, v) => acc.concat(v), []);
 // => [4, 5, 2, 3, 0, 1]
 ```
 
-## \_.reject
+## reject
 
 ```js
 _.reject(collection, [(predicate = _.identity)]);
@@ -580,7 +580,7 @@ _.reject(users, 'active');
 // => [{ user: 'barney', age: 36, active: false }]
 ```
 
-## \_.sample
+## sample
 
 ```js
 _.sample(collection);
@@ -593,7 +593,7 @@ _.sample([1, 2, 3, 4]);
 // => 1、2、3、4のいずれかを返す
 ```
 
-## \_.sampleSize
+## sampleSize
 
 ```js
 _.sampleSize(collection, [(n = 1)]);
@@ -610,7 +610,7 @@ _.sampleSize([1, 2, 3], 4);
 // => [2, 3, 1]
 ```
 
-## \_.shuffle
+## shuffle
 
 ```js
 _.sampleSize(collection, [(n = 1)]);
@@ -623,7 +623,7 @@ _.shuffle([1, 2, 3, 4]);
 // => [4, 1, 3, 2] などの要素がシャッフルされた配列
 ```
 
-## \_.size
+## size
 
 ```js
 _.size(collection);
@@ -646,7 +646,7 @@ _.size('pebbles');
 // => 7
 ```
 
-## \_.some
+## some
 
 ```js
 _.some(collection, [(predicate = _.identity)]);
@@ -676,7 +676,7 @@ _.some(users, 'active');
 // => true
 ```
 
-## \_.sortBy
+## sortBy
 
 ```js
 _.sortBy(collection, [(iteratees = [_.identity])]);
