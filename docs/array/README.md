@@ -154,9 +154,90 @@ _.differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], 'x');
 
 ## drop
 
+```js
+_.drop(array, [(n = 1)]);
+```
+
+配列の先頭から指定した数の要素を削除した配列を生成する。
+
+```js
+// デフォルトは1なので、最初の要素だけ削除される
+_.drop([1, 2, 3]);
+// => [2, 3]
+
+_.drop([1, 2, 3], 2);
+// => [3]
+
+_.drop([1, 2, 3], 5);
+// => []
+
+_.drop([1, 2, 3], 0);
+// => [1, 2, 3]
+```
+
 ## dropRight
 
+```js
+_.dropRight(array, [(n = 1)]);
+```
+
+配列の末尾から指定した数の要素を削除した配列を生成する。
+
+```js
+_.dropRight([1, 2, 3]);
+// => [1, 2]
+
+_.dropRight([1, 2, 3], 2);
+// => [1]
+
+_.dropRight([1, 2, 3], 5);
+// => []
+
+_.dropRight([1, 2, 3], 0);
+// => [1, 2, 3]
+```
+
 ## dropRightWhile
+
+```js
+_.dropRightWhile(array, [(predicate = _.identity)]);
+```
+
+配列の末尾の要素から反復処理を実行し、`false`を返すまでの要素を削除した配列を生成する。
+
+```js
+const users = [
+  { user: 'barney', active: true },
+  { user: 'fred', active: false },
+  { user: 'pebbles', active: false }
+];
+const users2 = [
+  { user: 'fred', active: false },
+  { user: 'barney', active: true },
+  { user: 'pebbles', active: false }
+];
+
+_.dropRightWhile(users, user => !user.active);
+// => [{user: "barney", active: true}]
+
+_.dropRightWhile(users2, user => !user.active);
+// => [{ user: 'fred', active: false }, {user: "barney", active: true}]
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+_.dropRightWhile(users, _.matches({ user: 'pebbles', active: false }));
+_.dropRightWhile(users, { user: 'pebbles', active: false });
+// => [{ user: 'fred', active: false }, {user: "barney", active: true}]
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+_.dropRightWhile(users, _.matchesProperty('active', false));
+_.dropRightWhile(users, ['active', false]);
+// => [{user: "barney", active: true}]
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+_.dropRightWhile(users, _.property('active'));
+_.dropRightWhile(users, 'active');
+// => [{user: "barney", active: true}, { user: 'fred', active: false }, { user: 'pebbles', active: false }]
+```
 
 ## dropWhile
 
