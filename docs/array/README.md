@@ -144,7 +144,7 @@ _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
 // この`1`を計算するために Math.floor に渡していたのは`1.2`のため、最終的な出力は
 // => [1.2]
 
-// `_.property``をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], _.property('x'));
 _.differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], 'x');
 // => [{ 'x': 2 }]
@@ -206,6 +206,9 @@ _.dropRightWhile(array, [(predicate = _.identity)]);
 配列の末尾の要素から反復処理を実行し、`false`を返すまでの要素を削除した配列を生成する。
 
 ```js
+_.dropRightWhile([2, 4, 5, 6, 8, 10], num => num % 2 === 0);
+// => [2, 4, 5]
+
 const users = [
   { user: 'barney', active: true },
   { user: 'fred', active: false },
@@ -241,9 +244,106 @@ _.dropRightWhile(users, 'active');
 
 ## dropWhile
 
+```js
+_.dropWhile(array, [(predicate = _.identity)]);
+```
+
+配列の先頭の要素から反復処理を実行し、`false`を返すまでの要素を削除した配列を生成する。
+
+```js
+_.dropWhile([2, 4, 5, 6, 8, 10], num => num % 2 === 0);
+// => [5, 6, 8, 10]
+
+const users = [
+  { user: 'barney', active: false },
+  { user: 'fred', active: false },
+  { user: 'pebbles', active: true }
+];
+const users2 = [
+  { user: 'barney', active: false },
+  { user: 'pebbles', active: true },
+  { user: 'fred', active: false }
+];
+
+_.dropWhile(users, user => !user.active);
+// => [{ user: 'barney', active: true }]
+
+_.dropWhile(users2, user => !user.active);
+// => [{ user: 'fred', active: false }, {user: "barney", active: true}]
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+_.dropWhile(users, _.matches({ user: 'barney', active: false }));
+_.dropWhile(users, { user: 'barney', active: false });
+// => [{ user: 'fred', active: false }, { user: 'pebbles', active: false }]
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+_.dropWhile(users, _.matchesProperty('active', false));
+_.dropWhile(users, ['active', false]);
+// => [{ user: 'pebbles', active: true }]
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+_.dropWhile(users, _.property('active'));
+_.dropWhile(users, 'active');
+// => [{ user: 'barney', active: false }, { user: 'fred', active: false }, { user: 'pebbles', active: true }]
+```
+
 ## fill
 
+```js
+_.fill(array, value, [(start = 0)], [(end = array.length)]);
+```
+
+配列の要素を指定した値で埋める（置き換える）。
+
+第二引数で値を埋める開始位置を、第三引数で終了位置を指定する（終了位置は値が埋められない）。
+
+```js
+const array = [1, 2, 3];
+
+_.fill(array, 'a');
+console.log(array);
+// => ['a', 'a', 'a']
+
+_.fill(Array(3), 2);
+// => [2, 2, 2]
+
+_.fill([4, 6, 8, 10], '*', 1, 3);
+// => [4, '*', '*', 10]
+```
+
 ## findIndex
+
+```js
+_.findIndex(array, [(predicate = _.identity)], [(fromIndex = 0)]);
+```
+
+反復処理で最初に`true`を返す要素のインデックスを返す。
+
+```js
+const users = [
+  { user: 'barney', active: false },
+  { user: 'fred', active: false },
+  { user: 'pebbles', active: true }
+];
+
+_.findIndex(users, user => user.user == 'barney');
+// => 0
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findIndex(users, _.matches({ user: 'fred', active: false }));
+_.findIndex(users, { user: 'fred', active: false });
+// => 1
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findIndex(users, _.matchesProperty('active', false));
+_.findIndex(users, ['active', false]);
+// => 0
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findIndex(users, _.property('active'));
+_.findIndex(users, 'active');
+// => 2
+```
 
 ## findLastIndex
 
