@@ -1,6 +1,7 @@
 # Array
 
 - [Array](#array)
+
   - [chunk](#chunk)
   - [compact](#compact)
   - [concat](#concat)
@@ -14,7 +15,6 @@
   - [fill](#fill)
   - [findIndex](#findindex)
   - [findLastIndex](#findlastindex)
-  - [first -> head](#first---head)
   - [flatten](#flatten)
   - [flattenDeep](#flattendeep)
   - [flattenDepth](#flattendepth)
@@ -347,15 +347,107 @@ _.findIndex(users, 'active');
 
 ## findLastIndex
 
-## first -> head
+```js
+_.findLastIndex(
+  array,
+  [(predicate = _.identity)],
+  [(fromIndex = array.length - 1)]
+);
+```
+
+要素を右から左に反復処理し、最初に`true`を返す要素のインデックスを返す。
+
+```js
+const users = [
+  { user: 'pebbles', active: true },
+  { user: 'barney', active: false },
+  { user: 'fred', active: false }
+];
+
+_.findLastIndex(users, user => user.user == 'barney');
+// => 1
+
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findLastIndex(users, _.matches({ user: 'fred', active: false }));
+_.findLastIndex(users, { user: 'fred', active: false });
+// => 2
+
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findLastIndex(users, _.matchesProperty('active', true));
+_.findLastIndex(users, ['active', true]);
+// => 0
+
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.findLastIndex(users, _.property('active'));
+_.findLastIndex(users, 'active');
+// => 0
+```
 
 ## flatten
 
+```js
+_.flatten(array);
+```
+
+配列を深さレベル１で平坦化した配列を生成する。
+
+```js
+_.flatten([1, [2, [3, [4]], 5]]);
+// => [1, 2, [3, [4]], 5]
+```
+
 ## flattenDeep
+
+```js
+_.flattenDeep(array);
+```
+
+配列を再帰的に平坦化した配列を生成する。
+
+```js
+_.flattenDeep([1, [2, [3, [4]], 5]]);
+// => [1, 2, 3, 4, 5]
+```
 
 ## flattenDepth
 
+```js
+_.flattenDepth(array, [(depth = 1)]);
+```
+
+配列を指定した深さレベルで平坦化した配列を生成する。
+
+```js
+const array = [1, [2, [3, [4]], 5]];
+
+_.flattenDepth(array, 1);
+// => [1, 2, [3, [4]], 5]
+
+_.flattenDepth(array, 2);
+// => [1, 2, 3, [4], 5]
+
+_.flattenDepth(array, 3);
+// => [1, 2, 3, 4, 5]
+```
+
 ## fromPairs
+
+```js
+_.fromPairs(pairs);
+```
+
+配列の要素をキーと値にしたオブジェクトを生成する。
+
+```js
+_.fromPairs([['a', 1], ['b', 2]]);
+// => { 'a': 1, 'b': 2 }
+
+_.fromPairs([['a', 1], ['a', 2]]);
+// => { 'a': 2 }
+
+_.fromPairs([['a', 1, 'A'], ['b', 2, 'B']]);
+// => { 'a': 1, 'b': 2 }
+```
 
 ## head
 
