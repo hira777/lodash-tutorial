@@ -541,25 +541,193 @@ _.intersectionBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], 'x');
 
 ## join
 
+```js
+_.join(array, [(separator = ',')]);
+```
+
+配列の要素を引数で渡した文字列で区切った文字列を生成する。
+
+```js
+_.join(['a', 'b', 'c'], '~');
+// => 'a~b~c'
+
+_.join(['a', 'b', 'c'], '-');
+// => 'a-b-c'
+```
+
 ## last
+
+```js
+_.last(array);
+```
+
+配列の最後の要素を返す。
 
 ## lastIndexOf
 
+```js
+_.lastIndexOf(array, value, [(fromIndex = array.length - 1)]);
+```
+
+引数の値と等価になる要素のインデックスを返す。`_.indexOf`とは逆で右から左に検索をする。
+
+第三引数で検索を開始するインデックスを指定できる。
+
+```js
+_.lastIndexOf([1, 2, 1, 2], 2);
+// => 2
+
+// インデックスの２から検索を開始する
+_.lastIndexOf([1, 2, 1, 2], 2, 2);
+// => 1
+```
+
 ## nth
+
+```js
+_.nth(array, [(n = 0)]);
+```
+
+配列から指定したインデックスの要素を取得する。
+
+負数の場合、末尾からインデックスの要素を取得する。。
+
+```js
+const array = ['a', 'b', 'c', 'd'];
+
+_.nth(array, 1);
+// => 'b'
+
+_.nth(array, -2);
+// => 'c';
+```
 
 ## pull
 
+```js
+_.pull(array, [values]);
+```
+
+配列から指定した値を削除する。
+
+`_.without`とは異なり、新しい配列を生成するのではなく、元の配列が変更される。
+
+```js
+const array = ['a', 'b', 'c', 'a', 'b', 'c'];
+
+_.pull(array, 'a', 'c');
+console.log(array);
+// => ['b', 'b']
+```
+
 ## pullAll
 
+```js
+_.pullAll(array, values);
+```
+
+配列から指定した配列の値を削除する。
+
+`_.difference`とは異なり、新しい配列を生成するのではなく、元の配列が変更される。
+
+```js
+const array = ['a', 'b', 'c', 'a', 'b', 'c'];
+const values = ['a', 'c'];
+
+_.pullAll(array, values);
+console.log(array);
+// => ['b', 'b']
+```
+
 ## pullAllBy
+
+```js
+_.pullAllBy(array, values, [(iteratee = _.identity)]);
+```
+
+1. 第一引数の配列と第二引数以降の配列の値に対して反復処理を実行する。
+2. それぞれの反復処理の結果である配列を比較する。
+3. 等価となる値があった場合、その結果を計算するために利用した値を第一引数の配列から削除する。
+
+`_.differenceBy`とは異なり、新しい配列を生成するのではなく、元の配列が変更される。
+
+テキストだと動作がわかりづらいため、サンプルコードを見た方がわかりやすいと思う。
+
+```js
+const array = [2.1, 1.2];
+const values = [2.3, 3.4];
+_.pullAllBy(array, values, Math.floor);
+// [2.1, 1.2], [2.3, 3.4] に Math.floor を実行すると
+// [2, 1], [2, 3] になる。結果が等価になるのは`2`であり
+// この`2`を計算するために Math.floor に渡していた`2.1`が削除される。
+console.log(array);
+// => [1.2]
+
+const array2 = [{ x: 1 }, { x: 2 }, { x: 3 }, { x: 1 }];
+// `_.property`をショートハンド（`_.property('x')` -> `x`）で書ける。
+_.pullAllBy(array2, [{ x: 1 }, { x: 3 }], 'x');
+// => [{ x: 2 }]
+```
 
 ## pullAllWith
 
 ## pullAt
 
+```js
+_.pullAt(array, [indexes]);
+```
+
+指定したインデックスの要素を削除した配列を返す。
+
+`_.at`とは異なり、新しい配列を生成するのではなく、元の配列も変更される。
+
+```js
+const array = ['a', 'b', 'c', 'd'];
+const pulled = _.pullAt(array, [1, 3]);
+
+console.log(array);
+// => ['a', 'c']
+
+console.log(pulled);
+// => ['b', 'd']
+```
+
 ## remove
 
+反復処理で`true`を返す要素を削除した配列を返す。
+
+`_.filter`とは異なり、新しい配列を生成するのではなく、元の配列も変更される。
+
+```js
+const array = [1, 2, 3, 4];
+const evens = _.remove(array, n => n % 2 == 0);
+
+console.log(array);
+// => [1, 3]
+
+console.log(evens);
+// => [2, 4]
+```
+
 ## reverse
+
+```js
+_.reverse(array);
+```
+
+配列の要素を反転する。
+
+新しい配列を生成するのではなく、元の配列が変更される。
+
+```js
+const array = [1, 2, 3];
+
+_.reverse(array);
+// => [3, 2, 1]
+
+console.log(array);
+// => [3, 2, 1]
+```
 
 ## slice
 
