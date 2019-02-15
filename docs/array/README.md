@@ -749,13 +749,112 @@ console.log(array);
 
 ## tail
 
+```js
+_.tail(array);
+```
+
+配列の最初の要素以外の要素を取得する。
+
+```js
+_.tail([1, 2, 3]);
+// => [2, 3]
+```
+
 ## take
+
+```js
+_.take(array, [(n = 1)]);
+```
+
+配列の先頭から指定した数の要素を取得する。デフォルトの取得数は`1`。
+
+```js
+// デフォルトの取得数は`1`なので１つの要素を取得する。
+_.take([1, 2, 3]);
+// => [1]
+
+_.take([1, 2, 3], 2);
+// => [1, 2]
+
+_.take([1, 2, 3], 5);
+// => [1, 2, 3]
+
+_.take([1, 2, 3], 0);
+// => []
+```
 
 ## takeRight
 
+```js
+_.takeRight(array, [(n = 1)]);
+```
+
+配列の末尾から指定した数の要素を取得する。デフォルトの取得数は`1`。
+
+```js
+// デフォルトの取得数は`1`なので１つの要素を取得する。
+_.takeRight([1, 2, 3]);
+// => [3]
+
+_.takeRight([1, 2, 3], 2);
+// => [2, 3]
+
+_.takeRight([1, 2, 3], 5);
+// => [1, 2, 3]
+
+_.takeRight([1, 2, 3], 0);
+// => []
+```
+
 ## takeRightWhile
 
+```js
+_.takeRightWhile(array, [(predicate = _.identity)]);
+```
+
+配列の末尾の要素から反復処理を実行し、`false`を返すまでの要素を取得する。
+
+<!-- した配列を生成する。 -->
+
+```js
+_.takeRightWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
+// => [9, 11, 13]
+
+var users = [
+  { user: 'dom', active: false },
+  { user: 'barney', active: true },
+  { user: 'fred', active: false },
+  { user: 'pebbles', active: false }
+];
+
+_.takeRightWhile(users, user => !user.active);
+// => objects for ['fred', 'pebbles']
+
+// The `_.matches` iteratee shorthand.
+_.takeRightWhile(users, { user: 'pebbles', active: false });
+// => objects for ['pebbles']
+
+// The `_.matchesProperty` iteratee shorthand.
+_.takeRightWhile(users, ['active', false]);
+// => objects for ['fred', 'pebbles']
+
+// The `_.property` iteratee shorthand.
+_.takeRightWhile(users, 'active');
+// => []
+```
+
 ## takeWhile
+
+```js
+_.takeWhile(array, [(predicate = _.identity)]);
+```
+
+配列の先頭の要素から反復処理を実行し、`false`を返すまでの要素を取得する。
+
+```js
+_.takeWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
+// => [5, 1, 3]
+```
 
 ## union
 
