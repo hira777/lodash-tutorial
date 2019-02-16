@@ -870,20 +870,138 @@ _.takeWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
 
 ## unzip
 
+`_.zip`でグループ化された配列の構成を元に戻す。
+
+```js
+const zipped = _.zip(['a', 'b'], [1, 2], [true, false]);
+// => [['a', 1, true], ['b', 2, false]]
+
+_.unzip(zipped);
+// => [['a', 'b'], [1, 2], [true, false]]
+
+_.unzip([['Pikachu', 'ELECTRIC'], ['Eevee', 'NORMAL'], ['Chikorita', 'CRASS']]);
+// => [['Pikachu', 'Eevee', 'Chikorita'],['ELECTRIC', 'NORMAL', 'CRASS']]
+```
+
 ## unzipWith
+
+複数の配列の要素を反復処理の引数として渡し、その反復処理の実行結果が格納された配列を生成する。
+
+```js
+const zipped = _.zip([1, 2, 3], [10, 20, 30], [100, 200, 300]);
+// => [[1, 10, 100], [2, 20, 200], [3, 30, 300]]
+
+_.unzipWith(zipped, (a, b, c) => a + b + c);
+// `a`、`b`、`c`にそれぞれの配列の要素が渡されるため、以下のような計算がされる
+// 1 + 2 + 3 = 6
+// 10 + 20 + 30 = 60
+// 100 + 200 + 300 = 600
+// => [6, 60, 600]
+
+_.unzipWith(
+  [['Pikachu', 'Eevee', 'Chikorita'], ['ELECTRIC', 'NORMAL', 'CRASS']],
+  (name, type) => `Name: ${name} Type: ${type}`
+);
+// =>
+// [
+//   "Name: Pikachu Type: ELECTRIC",
+//   "Name: Eevee Type: NORMAL",
+//   "Name: Chikorita Type: CRASS"
+// ]
+
+// 引数の渡し方が異なるが `_.zipWith` でも同じことはできる。
+_.zipWith([1, 10, 100], [2, 20, 200], [3, 30, 300], (a, b, c) => a + b + c);
+// => [6, 60, 600]
+```
 
 ## without
 
+指定した値を除外した配列を生成する。
+
+等価性の比較には[SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#A_model_for_understanding_equality_comparisons)が利用される。
+
+```js
+_.without([2, 1, 2, 3], 1, 2);
+// => [3]
+```
+
 ## xor
 
+```js
+_.xor([arrays]);
+```
+
+複数の配列の対称差となる値を格納した配列を生成する。
+
+```js
+_.xor([2, 1], [2, 3]);
+// => [1, 3]
+```
+
 ## xorBy
+
+```js
+_.xorBy([arrays], [(iteratee = _.identity)]);
+```
+
+複数の配列に対して反復処理を実行し、それぞれの反復処理の結果である配列を比較する。そして、対称差となる値があった場合、その値を計算した反復処理の引数に渡されていた要素を格納した配列を生成する。
+
+テキストだと動作がわかりづらいため、サンプルコードを見た方がわかりやすいと思う。
+
+```js
+_.xorBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+// `[2.1, 1.2]`、`[2.3, 3.4]` に `Math.floor` を実行すると
+// `[2, 1]`、`[2, 3]` になる。対称差となる値は `1` と `3` であり
+// この `1` と `3` を計算した `Math.floor` に渡されていた要素は
+// `1.2` と `3.4` のため、最終的な出力は
+// => [1.2, 3.4]
+
+// `_.property`のショートハンドが利用できるため
+// `_.xorBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], _.property('x'))`
+// を以下のように書ける。
+_.xorBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], 'x');
+// => [{ x: 2 }]
+```
 
 ## xorWith
 
 ## zip
 
+```js
+_.zip([arrays]);
+```
+
+複数の配列の要素がグループ化された配列を生成する。
+
+```js
+_.zip(['a', 'b'], [1, 2], [true, false]);
+// => [['a', 1, true], ['b', 2, false]]
+```
+
 ## zipObject
+
+```js
+_.zipObject([(props = [])], [(values = [])]);
+```
+
+第一引数の配列の要素をキーにして、第二引数の配列の要素を値にしたオブジェクトを生成する。
+
+```js
+_.zipObject(['a', 'b'], [1, 2]);
+// => { a: 1, b: 2 }
+```
 
 ## zipObjectDeep
 
 ## zipWith
+
+```js
+_.zipWith([arrays], [(iteratee = _.identity)]);
+```
+
+複数の配列の要素を反復処理の引数として渡し、その反復処理の実行結果が格納された配列を生成する。
+
+```js
+_.zipWith([1, 2], [10, 20], [100, 200], (a, b, c) => a + b + c);
+// => [111, 222]
+```
