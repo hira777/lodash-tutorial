@@ -1065,6 +1065,19 @@ _.zipObject(['a', 'b'], [1, 2]);
 
 ## zipObjectDeep
 
+```js
+_.zipObjectDeep([(props = [])], [(values = [])]);
+```
+
+第一引数の配列の要素をキーにして、第二引数の配列の要素を値にしたオブジェクトを返す。
+
+zipObject とは異なり、property paths をサポートしているため、`a.b[0].c`のようなネストされたキーも指定できる。
+
+```js
+_.zipObjectDeep(['a.b[0].c', 'a.b[1].d'], [1, 2]);
+// => { a: { b: [{ c: 1 }, { d: 2 }] } }
+```
+
 ## zipWith
 
 ```js
