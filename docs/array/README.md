@@ -583,6 +583,24 @@ _.intersectionBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], 'x');
 
 ## intersectionWith
 
+```js
+_.intersectionWith([arrays], [comparator]);
+```
+
+第１引数の配列と、第２引数以降の配列の要素に対して comparator を実行し、全て配列で一致する（`true`を返す）要素を格納した配列を返す。
+
+言葉の説明だと非常にわかり辛いため、サンプルコードを見た方が理解しやすい。
+
+```js
+_.intersectionWith(
+  [{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 2, y: 2 }],
+  [{ x: 1, y: 2 }],
+  [{ x: 2, y: 2 }, { x: 1, y: 2 }],
+  _.isEqual
+);
+// => [{ x: 1, y: 2 }]
+```
+
 ## join
 
 ```js
@@ -606,6 +624,11 @@ _.last(array);
 ```
 
 配列の最後の要素を返す。
+
+```js
+_.last([1, 2, 3]);
+// => 3
+```
 
 ## lastIndexOf
 
@@ -884,13 +907,11 @@ _.takeRightWhile(array, [(predicate = _.identity)]);
 
 配列の末尾の要素から反復処理を実行し、`false`を返すまでの要素を取得する。
 
-<!-- した配列を返す。 -->
-
 ```js
 _.takeRightWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
 // => [9, 11, 13]
 
-var users = [
+const users = [
   { user: 'dom', active: false },
   { user: 'barney', active: true },
   { user: 'fred', active: false },
@@ -900,15 +921,18 @@ var users = [
 _.takeRightWhile(users, user => !user.active);
 // => objects for ['fred', 'pebbles']
 
-// The `_.matches` iteratee shorthand.
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.takeRightWhile(users, _.matches({ user: 'pebbles', active: false }));
 _.takeRightWhile(users, { user: 'pebbles', active: false });
 // => objects for ['pebbles']
 
-// The `_.matchesProperty` iteratee shorthand.
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
+_.takeRightWhile(users, _.matchesProperty('active', false));
 _.takeRightWhile(users, ['active', false]);
 // => objects for ['fred', 'pebbles']
 
 // The `_.property` iteratee shorthand.
+_.takeRightWhile(users, _.property('active'));
 _.takeRightWhile(users, 'active');
 // => []
 ```
@@ -928,6 +952,10 @@ _.takeWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
 
 ## union
 
+```js
+_.union([arrays]);
+```
+
 複数の配列を連結し、値の重複を取り除いた配列を返す。
 
 ```js
@@ -936,6 +964,22 @@ _.union([2], [1, 2]);
 ```
 
 ## unionBy
+
+```js
+_.unionBy([arrays], [(iteratee = _.identity)]);
+```
+
+```js
+// [2.1], [1, 2.3] に Math.floor を実行すると
+// [2], [1, 2] になる。結果が重複するのは`2`であり
+// この`2`を計算するために Math.floor に渡していた`2.3`が削除される。
+_.unionBy([2.1], [1.2, 2.3], Math.floor);
+// => [2.1, 1.2]
+
+// The `_.property` iteratee shorthand.
+_.unionBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], 'x');
+// => [{ 'x': 1 }, { 'x': 2 }]
+```
 
 ## unionWith
 
