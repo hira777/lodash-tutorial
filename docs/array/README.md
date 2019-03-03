@@ -163,6 +163,40 @@ _.differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], 'x');
 
 ## differenceWith
 
+```js
+_.differenceWith(array, [values], [comparator]);
+```
+
+第１引数の配列と、第２引数以降の配列の要素に対して comparator を実行し、一致しない（`false`を返す）要素を格納した配列を返す。
+
+言葉の説明だと非常にわかり辛いため、サンプルコードを見た方が理解しやすい。
+
+```js
+// comparator　の第１引数の引数には、第１引数の配列の要素が渡され
+// comparator　の第２引数の引数には、第２引数以降の配列の要素が渡されるため、以下の処理が実行される
+// 第２引数の配列の要素と比較
+// _.isEqual({ x: 1, y: 2 }, { x: 1, y: 2 }) => true なのでこの要素は戻り値には格納されない
+//
+// 第２引数の配列の要素と比較
+// _.isEqual({ x: 2, y: 1 }, { x: 1, y: 2 }) => false
+//
+// 第３引数の配列の要素と比較
+// _.isEqual({ x: 2, y: 1 }, { x: 2, y: 2 }) => false
+//
+// 第２引数の配列の要素と比較
+// _.isEqual({ x: 2, y: 2 }, { x: 1, y: 2 }) => false
+//
+// 第３引数の配列の要素と比較
+// _.isEqual({ x: 2, y: 2 }, { x: 2, y: 2 }) => true なのでこの要素は戻り値には格納されない
+_.differenceWith(
+  [{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 2, y: 2 }],
+  [{ x: 1, y: 2 }],
+  [{ x: 2, y: 2 }],
+  _.isEqual
+);
+// => [{ x: 2, y: 1 }]
+```
+
 ## drop
 
 ```js
@@ -236,17 +270,17 @@ _.dropRightWhile(users, user => !user.active);
 _.dropRightWhile(users2, user => !user.active);
 // => [{ user: 'fred', active: false }, {user: "barney", active: true}]
 
-// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.dropRightWhile(users, _.matches({ user: 'pebbles', active: false }));
 _.dropRightWhile(users, { user: 'pebbles', active: false });
 // => [{ user: 'fred', active: false }, {user: "barney", active: true}]
 
-// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.dropRightWhile(users, _.matchesProperty('active', false));
 _.dropRightWhile(users, ['active', false]);
 // => [{user: "barney", active: true}]
 
-// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.dropRightWhile(users, _.property('active'));
 _.dropRightWhile(users, 'active');
 // => [{user: "barney", active: true}, { user: 'fred', active: false }, { user: 'pebbles', active: false }]
@@ -281,17 +315,17 @@ _.dropWhile(users, user => !user.active);
 _.dropWhile(users2, user => !user.active);
 // => [{ user: 'fred', active: false }, {user: "barney", active: true}]
 
-// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+// `_.matches`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.dropWhile(users, _.matches({ user: 'barney', active: false }));
 _.dropWhile(users, { user: 'barney', active: false });
 // => [{ user: 'fred', active: false }, { user: 'pebbles', active: false }]
 
-// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+// `_.matchesProperty`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.dropWhile(users, _.matchesProperty('active', false));
 _.dropWhile(users, ['active', false]);
 // => [{ user: 'pebbles', active: true }]
 
-// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。.
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.dropWhile(users, _.property('active'));
 _.dropWhile(users, 'active');
 // => [{ user: 'barney', active: false }, { user: 'fred', active: false }, { user: 'pebbles', active: true }]
