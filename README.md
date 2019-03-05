@@ -26,7 +26,7 @@ Lodash と似たような機能を提供する[Ramda](https://ramdajs.com/) と�
 
 ## リファレンス
 
-- Array
+- [Array](./docs/array/)
 - [Collection](./docs/collection/)
 - Data
 - Function
