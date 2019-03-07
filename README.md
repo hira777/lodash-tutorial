@@ -36,6 +36,6 @@ Lodash と似たような機能を提供する[Ramda](https://ramdajs.com/) と�
 - Object
 - Seq
 - String
-- Util
+- [Util](./docs/util/)
 - Properties
 - Methods
