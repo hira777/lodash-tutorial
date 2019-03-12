@@ -744,7 +744,7 @@ console.log(array);
 _.pullAllBy(array, values, [(iteratee = _.identity)]);
 ```
 
-1. 第１引数の配列と第2引数以降の配列に対して反復処理を実行する。
+1. 第１引数の配列と第 2 引数以降の配列に対して反復処理を実行する。
 2. それぞれの反復処理の戻り値が格納された配列を比較する。
 3. 等価となる値があった場合、その値を返した反復処理に渡されていた要素を第１引数の配列から削除する。
 
@@ -864,9 +864,56 @@ _.sortedIndexBy([{ x: 4 }, { x: 6 }], { x: 5 }, o => o.x);
 
 ## sortedIndexOf
 
+```js
+_.sortedIndexOf(array, value);
+```
+
+ソートされた`array`に対して二分探索を実行し、`value`にマッチするインデックスを返す。
+
+```js
+_.sortedIndexOf([4, 5, 5, 5, 6], 5);
+// => 1
+```
+
 ## sortedLastIndex
 
+```js
+_.sortedLastIndex(array, value);
+```
+
+ソートされた`array`に対して二分探索を実行し、`value`にマッチする最大（最後）のインデックスを返す。
+
+```js
+_.sortedLastIndex([4, 5, 5, 5, 6], 5);
+// => 4
+```
+
 ## sortedLastIndexBy
+
+```js
+_.sortedLastIndexBy(array, value, [(iteratee = _.identity)]);
+```
+
+ソートされた`array`の要素と`value`を引数とした`iteratee`戻り値をソートする。
+
+そして、戻り値がソートされた配列から、`value`を引数とした`iteratee`の戻り値が存在するインデックスを返す。
+
+```js
+const objects = [{ x: 4 }, { x: 6 }];
+
+// `objects`の要素と`{ x: 5 }`を引数とした`o => o.x`の戻り値は
+// `[4, 6, 5]`であり、これらをソートすると`[4, 5, 6]`である
+// ソートされた配列内で`5`（`{ x: 5 }`を引数とした`o => o.x`の戻り値）の
+// インデックスは`1`のため、最終的な出力は`1`になる
+_.sortedLastIndexBy(objects, { x: 5 }, o => o.x);
+// => 1
+_.sortedLastIndexBy(objects, { x: 7 }, o => o.x);
+// => 2
+
+// `_.property` のショートハンドを利用できる
+_.sortedLastIndexBy(objects, { x: 5 }, 'x');
+// => 1
+```
 
 ## sortedLastIndexOf
 
