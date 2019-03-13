@@ -963,7 +963,7 @@ _.sortedUniqBy([1.1, 1.2, 2.3, 2.4], Math.floor);
 _.tail(array);
 ```
 
-配列の最初の要素以外の要素を取得する。
+`array`の最初の要素以外の要素を格納した配列を返す。
 
 ```js
 _.tail([1, 2, 3]);
@@ -976,7 +976,7 @@ _.tail([1, 2, 3]);
 _.take(array, [(n = 1)]);
 ```
 
-配列の先頭から指定した数の要素を取得する。デフォルトの取得数は`1`。
+`array`の先頭から`n`個の要素を格納した配列を返す。デフォルトの取得数は`1`。
 
 ```js
 // デフォルトの取得数は`1`なので１つの要素を取得する。
@@ -999,7 +999,7 @@ _.take([1, 2, 3], 0);
 _.takeRight(array, [(n = 1)]);
 ```
 
-配列の末尾から指定した数の要素を取得する。デフォルトの取得数は`1`。
+`array`の末尾から`n`個の要素を格納した配列を返す。デフォルトの取得数は`1`。
 
 ```js
 // デフォルトの取得数は`1`なので１つの要素を取得する。
@@ -1022,7 +1022,7 @@ _.takeRight([1, 2, 3], 0);
 _.takeRightWhile(array, [(predicate = _.identity)]);
 ```
 
-配列の末尾の要素から反復処理を実行し、`false`を返すまでの要素を取得する。
+`array`の末尾の要素から`predicate`を実行し、`false`を返すまでの要素を格納した配列を返す。
 
 ```js
 _.takeRightWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
@@ -1048,7 +1048,7 @@ _.takeRightWhile(users, _.matchesProperty('active', false));
 _.takeRightWhile(users, ['active', false]);
 // => objects for ['fred', 'pebbles']
 
-// The `_.property` iteratee shorthand.
+// `_.property`をショートハンドで書ける。そのため、以下のコードの処理はどちらも同じ。
 _.takeRightWhile(users, _.property('active'));
 _.takeRightWhile(users, 'active');
 // => []
@@ -1060,7 +1060,7 @@ _.takeRightWhile(users, 'active');
 _.takeWhile(array, [(predicate = _.identity)]);
 ```
 
-配列の先頭の要素から反復処理を実行し、`false`を返すまでの要素を取得する。
+`array`の先頭の要素から`predicate`を実行し、`false`を返すまでの要素を格納した配列を返す。
 
 ```js
 _.takeWhile([5, 1, 3, 2, 9, 11, 13], num => num % 2 === 1);
@@ -1086,7 +1086,7 @@ _.union([2], [1, 2]);
 _.unionBy([arrays], [(iteratee = _.identity)]);
 ```
 
-複数の配列から「戻り値が重複する反復処理の引数に渡している要素」を取り除き、結合した配列を返す。
+`arrays`の要素を引数とした`iteratee`の戻り値が重複する場合、`arrays`から戻り値が重複した`iteratee`の引数に渡している要素を取り除き、結合した配列を返す（重複の原因となる要素は配列内で一番順番が早いものが残り、それ以外が取り除かれる）。
 
 言葉の説明だと非常にわかりづらいため、サンプルコードを見た方が理解しやすいと思う。
 
