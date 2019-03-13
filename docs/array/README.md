@@ -881,7 +881,7 @@ _.sortedIndexOf([4, 5, 5, 5, 6], 5);
 _.sortedLastIndex(array, value);
 ```
 
-ソートされた`array`に対して二分探索を実行し、`value`にマッチする最大（最後）のインデックスを返す。
+ソートされた`array`に`value`を挿入しても、ソート順が維持される最大のインデックスを返す。
 
 ```js
 _.sortedLastIndex([4, 5, 5, 5, 6], 5);
@@ -917,9 +917,45 @@ _.sortedLastIndexBy(objects, { x: 5 }, 'x');
 
 ## sortedLastIndexOf
 
+```js
+_.sortedLastIndexOf(array, value);
+```
+
+ソートされた`array`に対して二分探索を実行し、`value`にマッチする最大のインデックスを返す。
+
+```js
+_.sortedLastIndexOf(array, value);
+```
+
 ## sortedUniq
 
+```js
+_.sortedUniq(array);
+```
+
+`_.uniq`と同様で`array`から値の重複を取り除いた配列を返す（重複した値は配列内で一番順番が早いものが残り、それ以外が取り除かれる）。
+
+`_.uniq`とは異なり、ソートされた配列用に設計、最適化されている。
+
+```js
+_.sortedUniq([1, 1, 2]);
+// => [1, 2]
+```
+
 ## sortedUniqBy
+
+```js
+_.sortedUniqBy(array, [iteratee]);
+```
+
+`_.uniqBy`と同様で、`array`の要素を引数とした`iteratee`の戻り値が重複する場合、`array`から戻り値が重複した`iteratee`の引数に渡している要素を取り除いた配列を返す（重複の原因となる要素は配列内で一番順番が早いものが残り、それ以外が取り除かれる）。
+
+`_.uniqBy`とは異なり、ソートされた配列用に設計、最適化されている。
+
+```js
+_.sortedUniqBy([1.1, 1.2, 2.3, 2.4], Math.floor);
+// => [1.1, 2.3]
+```
 
 ## tail
 
