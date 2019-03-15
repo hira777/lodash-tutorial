@@ -73,7 +73,7 @@
 _.chunk(array, [(size = 1)]);
 ```
 
-第１引数の配列の要素を、第２引数で指定した長さ（デフォルトは`1`）で分割した配列を返す。
+`array`の要素を、`size`の長さ（デフォルトは`1`）で分割した配列を返す。
 
 ```js
 _.chunk(['a', 'b', 'c', 'd']);
@@ -92,7 +92,7 @@ _.chunk(['a', 'b', 'c', 'd', 'e'], 2);
 _.compact(array);
 ```
 
-配列の要素から`false`、`null`、`0`、`""`、`undefined`、`NaN`を削除した配列を返す。
+`array`の要素から`false`、`null`、`0`、`""`、`undefined`、`NaN`を取り除いた配列を返す。
 
 ```js
 _.compact([0, 1, false, 2, '', 3]);
@@ -105,7 +105,7 @@ _.compact([0, 1, false, 2, '', 3]);
 _.concat(array, [values]);
 ```
 
-第１引数の配列に第２引数以降の要素を連結した配列を返す。
+`array`に第`values`を連結した配列を返す。
 
 ```js
 const array = [1];
@@ -119,7 +119,7 @@ _.concat(array, 2, [3], [[4]], { name: 'soarflat' });
 _.difference(array, [values]);
 ```
 
-第１引数の配列から、第２引数以降の配列に含まれない値を格納した配列を返す。
+`array`の配列から、`values`に含まれない値を格納した配列を返す。
 
 ```js
 _.difference([2, 1], [2, 3]);
@@ -894,7 +894,7 @@ _.sortedLastIndex([4, 5, 5, 5, 6], 5);
 _.sortedLastIndexBy(array, value, [(iteratee = _.identity)]);
 ```
 
-ソートされた`array`の要素と`value`を引数とした`iteratee`戻り値をソートする。
+ソートされた`array`の要素と`value`を引数とした`iteratee`の戻り値をソートする。
 
 そして、戻り値がソートされた配列から、`value`を引数とした`iteratee`の戻り値が存在するインデックスを返す。
 
@@ -1086,7 +1086,7 @@ _.union([2], [1, 2]);
 _.unionBy([arrays], [(iteratee = _.identity)]);
 ```
 
-`arrays`の要素を引数とした`iteratee`の戻り値が重複する場合、`arrays`から戻り値が重複した`iteratee`の引数に渡している要素を取り除き、結合した配列を返す（重複の原因となる要素は配列内で一番順番が早いものが残り、それ以外が取り除かれる）。
+`arrays`の要素を引数とした`iteratee`の戻り値が重複する場合、`arrays`から「戻り値が重複した`iteratee`の引数に渡している要素」を取り除き、結合した配列を返す（重複の原因となる要素は配列内で一番順番が早いものが残り、それ以外が取り除かれる）。
 
 言葉の説明だと非常にわかりづらいため、サンプルコードを見た方が理解しやすいと思う。
 
@@ -1144,7 +1144,11 @@ _.uniqBy([{ x: 1 }, { x: 2 }, { x: 1 }], 'x');
 
 ## unzip
 
-`_.zip`でグループ化された配列の構成を元に戻す。
+```js
+_.unzip(array);
+```
+
+`_.zip`でグループ化された`array`の構成を元に戻した配列を返す。
 
 ```js
 const zipped = _.zip(['a', 'b'], [1, 2], [true, false]);
@@ -1159,7 +1163,13 @@ _.unzip([['Pikachu', 'ELECTRIC'], ['Eevee', 'NORMAL'], ['Chikorita', 'CRASS']]);
 
 ## unzipWith
 
-全ての配列の要素を反復処理の引数として渡し、その反復処理の実行結果が格納された配列を返す。
+```js
+_.unzipWith(array, [(iteratee = _.identity)]);
+```
+
+`_.zip`でグループ化された`array`の構成を元に戻し、その配列の要素を引数とした`iteratee`の戻り値が格納された配列を返す。
+
+言葉の説明だと非常にわかり辛いため、サンプルコードを見た方がわかりやすいと思う。
 
 ```js
 const zipped = _.zip([1, 2, 3], [10, 20, 30], [100, 200, 300]);
@@ -1190,7 +1200,11 @@ _.zipWith([1, 10, 100], [2, 20, 200], [3, 30, 300], (a, b, c) => a + b + c);
 
 ## without
 
-指定した値を除外した配列を返す。
+```js
+_.without(array, [values]);
+```
+
+`array`から`values`を除外した配列を返す。
 
 等価性の比較には[SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#A_model_for_understanding_equality_comparisons)が利用される。
 
@@ -1205,7 +1219,7 @@ _.without([2, 1, 2, 3], 1, 2);
 _.xor([arrays]);
 ```
 
-全ての配列の対称差となる値を格納した配列を返す。
+`arrays`の対称差となる値を格納した配列を返す。
 
 ```js
 _.xor([2, 1], [2, 3]);
