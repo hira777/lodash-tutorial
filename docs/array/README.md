@@ -1142,6 +1142,26 @@ _.uniqBy([{ x: 1 }, { x: 2 }, { x: 1 }], 'x');
 
 ## uniqWith
 
+```js
+_.uniqWith(array, [comparator]);
+```
+
+`array`の要素を引数とした`comparator`を実行し、要素を比較して重複した要素を取り除いた配列を返す。
+
+配列から要素の重複を取り除ける。
+
+`comparator`には 2 つの引数が渡される（以下のサンプルコードを参照）。
+
+```js
+const objects = [{ x: 1, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 2 }];
+
+_.uniqWith(objects, _.isEqual);
+// 今回の場合、comparator である`_.isEqual`には以下の引数が渡されて実行される。
+// _.isEqual({x: 2, y: 1} {x: 1, y: 2})
+// _.isEqual({x: 1, y: 2} {x: 1, y: 2})
+// => [{ x: 1, y: 2 }, { x: 2, y: 1 }]
+```
+
 ## unzip
 
 ```js
@@ -1254,6 +1274,44 @@ _.xorBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], _.property('x'));
 
 ## xorWith
 
+```js
+_.xorWith([arrays], [comparator]);
+```
+
+`arrays`の要素を引数とした`comparator`を実行し、要素を比較して対称差となる要素を格納した配列を返す。
+
+配列から対称差となる要素を取得できる。
+
+`comparator`には 2 つの引数が渡される（以下のサンプルコードを参照）。
+
+```js
+const objects = [{ x: 1, y: 2 }, { x: 2, y: 1 }];
+const objects2 = [{ x: 1, y: 1 }, { x: 1, y: 2 }];
+const objects3 = [{ x: 1, y: 1 }, { x: 2, y: 2 }];
+
+_.xorWith(objects, objects2, objects3, _.isEqual);
+// 今回の場合、comparator である`_.isEqual`には以下の引数が渡されて実行される。
+// _.isEqual({x: 1, y: 2} {x: 1, y: 1})
+// _.isEqual({x: 1, y: 2} {x: 1, y: 2})
+// _.isEqual({x: 2, y: 1} {x: 1, y: 1})
+// _.isEqual({x: 2, y: 1} {x: 1, y: 2})
+// _.isEqual({x: 2, y: 1} {x: 1, y: 1})
+// _.isEqual({x: 2, y: 1} {x: 2, y: 2})
+// _.isEqual({x: 1, y: 1} {x: 1, y: 2})
+// _.isEqual({x: 1, y: 1} {x: 2, y: 1})
+// _.isEqual({x: 1, y: 2} {x: 1, y: 2})
+// _.isEqual({x: 1, y: 1} {x: 1, y: 1})
+// _.isEqual({x: 1, y: 1} {x: 1, y: 2})
+// _.isEqual({x: 1, y: 1} {x: 2, y: 1})
+// _.isEqual({x: 2, y: 2} {x: 1, y: 2})
+// _.isEqual({x: 2, y: 2} {x: 2, y: 1})
+// _.isEqual({x: 1, y: 1} {x: 1, y: 1})
+// _.isEqual({x: 2, y: 2} {x: 1, y: 1})
+// _.isEqual({x: 2, y: 2} {x: 1, y: 2})
+// _.isEqual({x: 2, y: 2} {x: 2, y: 1})
+// => [{ x: 2, y: 1 }, {x: 2, y: 2}]
+```
+
 ## zip
 
 ```js
@@ -1262,16 +1320,16 @@ _.zip([arrays]);
 
 `arrays`の要素がグループ化された配列を返す。
 
-```js
+````js
 _.zip(['a', 'b'], [1, 2], [true, false]);
 // => [['a', 1, true], ['b', 2, false]]
-```
+**```**
 
 ## zipObject
 
 ```js
 _.zipObject([(props = [])], [(values = [])]);
-```
+````
 
 第１引数の配列の要素をキーにして、第２引数の配列の要素を値にしたオブジェクトを返す。
 
