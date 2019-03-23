@@ -167,7 +167,7 @@ _.differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], 'x');
 _.differenceWith(array, [values], [comparator]);
 ```
 
-第１引数の配列と、第２引数以降の配列に対して comparator を実行し、一致しない（`false`を返す）要素を格納した配列を返す。
+`array`と`values`の要素を`comparator`で比較し、一致しない（`false`を返す）要素を格納した配列を返す。
 
 言葉の説明だと非常にわかり辛いため、サンプルコードを見た方が理解しやすい。
 
@@ -770,6 +770,24 @@ _.pullAllBy(array2, [{ x: 1 }, { x: 3 }], 'x');
 
 ## pullAllWith
 
+```js
+_.pullAllWith(array, values, [comparator]);
+```
+
+`array`と`values`の要素を`comparator`で比較し、一致しない（`false`を返す）要素を格納した配列を返す。
+
+`_.differenceWith`と異なり、新しい配列を生成するのではなく、引数で渡した配列が変更される。
+
+言葉の説明だと非常にわかり辛いため、サンプルコードを見た方が理解しやすい
+
+```js
+const array = [{ x: 1, y: 2 }, { x: 3, y: 4 }, { x: 5, y: 6 }];
+
+_.pullAllWith(array, [{ x: 3, y: 4 }], _.isEqual);
+console.log(array);
+// => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
+```
+
 ## pullAt
 
 ```js
@@ -778,7 +796,7 @@ _.pullAt(array, [indexes]);
 
 指定したインデックスの要素を削除した配列を返す。
 
-`_.at`とは異なり、新しい配列を生成するのではなく、元の配列も変更される。
+`_.at`とは異なり、新しい配列を生成するのではなく、引数で渡した配列が変更される。
 
 ```js
 const array = ['a', 'b', 'c', 'd'];
@@ -1107,7 +1125,32 @@ _.unionBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], 'x');
 
 ## unionWith
 
+```js
+_.unionWith([arrays], [comparator]);
+```
+
+`arrays`の要素を`comparator`で比較し、重複した要素を取り除いて結合した配列を返す（重複の原因となる要素は配列内で一番順番が早いものが残り、それ以外が取り除かれる）。
+
+`comparator`には 2 つの引数が渡される（以下のサンプルコードを参照）。
+
+```js
+const objects = [{ x: 1, y: 2 }, { x: 2, y: 1 }];
+const others = [{ x: 1, y: 1 }, { x: 1, y: 2 }];
+
+_.unionWith(objects, others, _.isEqual);
+// 今回の場合、comparator である`_.isEqual`には以下の引数が渡されて実行される。
+// _.isEqual({ x: 2, y: 1 }, { x: 1, y: 2 });
+// _.isEqual({ x: 1, y: 1 }, { x: 1, y: 2 });
+// _.isEqual({ x: 1, y: 1 }, { x: 2, y: 1 });
+// _.isEqual({ x: 1, y: 2 }, { x: 1, y: 2 });
+// => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]
+```
+
 ## uniq
+
+```js
+_.uniq(array);
+```
 
 配列から値の重複を取り除いた配列を返す。
 
@@ -1146,9 +1189,7 @@ _.uniqBy([{ x: 1 }, { x: 2 }, { x: 1 }], 'x');
 _.uniqWith(array, [comparator]);
 ```
 
-`array`の要素を引数とした`comparator`を実行し、要素を比較して重複した要素を取り除いた配列を返す。
-
-配列から要素の重複を取り除ける。
+`array`の要素を`comparator`で比較し、重複した要素を取り除いた配列を返す。
 
 `comparator`には 2 つの引数が渡される（以下のサンプルコードを参照）。
 
@@ -1278,9 +1319,7 @@ _.xorBy([{ x: 1 }], [{ x: 2 }, { x: 1 }], _.property('x'));
 _.xorWith([arrays], [comparator]);
 ```
 
-`arrays`の要素を引数とした`comparator`を実行し、要素を比較して対称差となる要素を格納した配列を返す。
-
-配列から対称差となる要素を取得できる。
+`arrays`の要素を`comparator`で比較し、対称差となる要素を格納した配列を返す。
 
 `comparator`には 2 つの引数が渡される（以下のサンプルコードを参照）。
 
